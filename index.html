@@ -308,7 +308,9 @@
   .pricing-block {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 24px;
+    grid-template-rows: auto auto;
+    column-gap: 24px;
+    row-gap: 0;
     margin-bottom: 32px;
   }
 
@@ -317,6 +319,9 @@
     background: var(--white);
     border-radius: 2px;
     overflow: hidden;
+    display: grid;
+    grid-template-rows: subgrid;
+    grid-row: span 2;
   }
 
   .price-card.featured {
