@@ -308,9 +308,7 @@
   .pricing-block {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto;
-    column-gap: 24px;
-    row-gap: 0;
+    gap: 24px;
     margin-bottom: 32px;
   }
 
@@ -319,9 +317,8 @@
     background: var(--white);
     border-radius: 2px;
     overflow: hidden;
-    display: grid;
-    grid-template-rows: subgrid;
-    grid-row: span 2;
+    display: flex;
+    flex-direction: column;
   }
 
   .price-card.featured {
@@ -803,4 +800,18 @@
       Geschäftsführer &nbsp;|&nbsp; active value GmbH<br>
       Benzenbergstraße 39–47, 40219 Düsseldorf<br>
       T +49 (0) 211 749 505 11 &nbsp;|&nbsp; M +49 (0) 173 342 0483<br>
-      <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail=
+      <a href="mailto:anton.klees@active-value.de">anton.klees@active-value.de</a>
+    </div>
+  </div>
+
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var headers = document.querySelectorAll('.price-card-header');
+    var maxH = 0;
+    headers.forEach(function(h) { maxH = Math.max(maxH, h.offsetHeight); });
+    headers.forEach(function(h) { h.style.minHeight = maxH + 'px'; });
+  });
+</script>
+</body>
+</html>
