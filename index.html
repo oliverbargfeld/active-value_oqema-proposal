@@ -611,6 +611,29 @@
 </style>
 </head>
 <body>
+
+<!-- PASSWORD GATE -->
+<div id="gate" style="display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--paper);padding:24px;">
+  <div style="width:100%;max-width:380px;">
+    <div style="text-align:center;margin-bottom:32px;">
+      <div style="font-family:'DM Serif Display',serif;font-size:22px;color:var(--ink);margin-bottom:6px;">active value</div>
+      <div style="font-size:13px;color:var(--ink-muted);font-weight:300;">OQEMA GOWEB Proposal &nbsp;|&nbsp; Restricted access</div>
+    </div>
+    <div style="background:var(--white);border:1px solid var(--rule);border-radius:2px;padding:36px 32px;">
+      <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:600;color:var(--accent);margin-bottom:20px;">Enter password to continue</div>
+      <input id="pw-input" type="password" placeholder="Password"
+        style="width:100%;padding:12px 16px;font-family:'DM Sans',sans-serif;font-size:14px;border:1px solid var(--rule);border-radius:2px;background:var(--paper);color:var(--ink);outline:none;box-sizing:border-box;margin-bottom:12px;"
+        onkeydown="if(event.key==='Enter')checkPw()">
+      <div id="pw-error" style="font-size:12px;color:#c0392b;margin-bottom:12px;display:none;">Incorrect password. Please try again.</div>
+      <button onclick="checkPw()"
+        style="width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:2px;font-family:'DM Sans',sans-serif;font-size:14px;font-weight:600;letter-spacing:0.04em;cursor:pointer;">
+        View Proposal
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="content" style="display:none;">
 <div class="page">
 
   <!-- LOGO BAR -->
@@ -843,7 +866,7 @@
       <div class="card">
         <div class="card-label">Model</div>
         <h3>Right role, right scope</h3>
-        <p>We take the coordination and editorial function. Kaliop remains the technical authority. No overlap, no ambiguity. Clear interfaces from day one.</p>
+        <p>We take the coordination and editorial function. Kaliop remains the technical authority. Clear interfaces from day one.</p>
       </div>
     </div>
   </div>
@@ -861,13 +884,39 @@
   </div>
 
 </div>
+</div> <!-- end #content -->
+
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
+  var HASH = '3fde635cdf31ea416cb44feecd56886f2f1d956038216598052295329130d012';
+
+  async function checkPw() {
+    var val = document.getElementById('pw-input').value;
+    var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(val));
+    var hash = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+    if (hash === HASH) {
+      sessionStorage.setItem('av_auth', '1');
+      document.getElementById('gate').style.display = 'none';
+      document.getElementById('content').style.display = 'block';
+      equaliseHeaders();
+    } else {
+      document.getElementById('pw-error').style.display = 'block';
+      document.getElementById('pw-input').value = '';
+      document.getElementById('pw-input').focus();
+    }
+  }
+
+  function equaliseHeaders() {
     var headers = document.querySelectorAll('.price-card-header');
     var maxH = 0;
     headers.forEach(function(h) { maxH = Math.max(maxH, h.offsetHeight); });
     headers.forEach(function(h) { h.style.minHeight = maxH + 'px'; });
-  });
+  }
+
+  if (sessionStorage.getItem('av_auth') === '1') {
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('content').style.display = 'block';
+    document.addEventListener('DOMContentLoaded', equaliseHeaders);
+  }
 </script>
 </body>
 </html>
