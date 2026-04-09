@@ -549,6 +549,61 @@
     opacity: 0.92;
   }
 
+  @media (max-width: 660px) {
+    .page > div:first-child {
+      padding: 16px 20px;
+    }
+
+    .cover {
+      grid-template-columns: 1fr;
+      padding: 36px 20px 28px;
+      gap: 24px;
+    }
+
+    .cover-left h1 { font-size: 30px; }
+
+    .cover-right { text-align: left; }
+
+    .section { padding: 32px 20px; }
+
+    .lead { font-size: 15px; }
+
+    .two-col,
+    .three-col {
+      grid-template-columns: 1fr;
+    }
+
+    .scope-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .scope-item {
+      border-right: none !important;
+      border-bottom: 1px solid var(--rule) !important;
+    }
+
+    .scope-item:last-child {
+      border-bottom: none !important;
+    }
+
+    .team-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .pricing-block {
+      grid-template-columns: 1fr;
+    }
+
+    .footer {
+      flex-direction: column;
+      padding: 32px 20px;
+      gap: 20px;
+      text-align: left;
+    }
+
+    .footer .contact { text-align: left; }
+  }
+
   @media print {
     body { background: white; }
     .cover::after { display: none; }
