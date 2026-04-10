@@ -4,8 +4,898 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>active value – OQEMA Proposal v2</title>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IBM+Plex+Serif:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #111111;
+    --dark: #2a2a2a;
+    --mid: #555555;
+    --muted: #888888;
+    --rule: #d8d8d8;
+    --rule-light: #ebebeb;
+    --bg: #ffffff;
+    --bg-off: #f7f7f5;
+    --accent: #1a6b3a;
+    --accent-light: #e8f3ec;
+    --accent-mid: #2a8a4e;
+    --tag-bg: #f0f0ee;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    background: var(--bg);
+    color: var(--dark);
+    font-size: 14px;
+    line-height: 1.65;
+  }
+
+  .page {
+    max-width: 820px;
+    margin: 0 auto;
+  }
+
+  /* ── HEADER ─────────────────────────────── */
+  .doc-header {
+    padding: 28px 56px 24px;
+    border-bottom: 2px solid var(--black);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .doc-header img {
+    height: 32px;
+    width: auto;
+  }
+
+  .doc-meta {
+    text-align: right;
+    font-size: 11.5px;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .doc-meta strong {
+    color: var(--dark);
+    font-weight: 500;
+  }
+
+  /* ── HERO ────────────────────────────────── */
+  .hero {
+    padding: 48px 56px 40px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .hero-label {
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  .hero h1 {
+    font-family: 'IBM Plex Serif', serif;
+    font-size: 34px;
+    font-weight: 300;
+    color: var(--black);
+    line-height: 1.15;
+    margin-bottom: 20px;
+    max-width: 560px;
+  }
+
+  .hero-summary {
+    font-size: 15px;
+    color: var(--mid);
+    font-weight: 300;
+    line-height: 1.75;
+    max-width: 600px;
+    border-left: 3px solid var(--accent);
+    padding-left: 20px;
+  }
+
+  /* ── SECTIONS ───────────────────────────── */
+  .section {
+    padding: 40px 56px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .section:last-child { border-bottom: none; }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--rule-light);
+  }
+
+  .section-num {
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    font-weight: 600;
+    color: var(--accent);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .section-title {
+    font-size: 17px;
+    font-weight: 500;
+    color: var(--black);
+    letter-spacing: -0.01em;
+  }
+
+  /* ── ROLE SPLIT TABLE ───────────────────── */
+  .role-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--rule);
+    font-size: 13px;
+  }
+
+  .role-table th {
+    background: var(--bg-off);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--muted);
+    padding: 11px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+    border-right: 1px solid var(--rule);
+  }
+
+  .role-table th:last-child { border-right: none; }
+
+  .role-table td {
+    padding: 13px 16px;
+    vertical-align: top;
+    border-right: 1px solid var(--rule-light);
+    border-bottom: 1px solid var(--rule-light);
+    color: var(--mid);
+    line-height: 1.6;
+  }
+
+  .role-table td:last-child { border-right: none; }
+  .role-table tr:last-child td { border-bottom: none; }
+
+  .role-table td strong {
+    display: block;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 4px;
+    font-size: 13px;
+  }
+
+  .role-table td.av {
+    background: var(--accent-light);
+  }
+
+  /* ── DELIVERABLE LIST ───────────────────── */
+  .deliverable-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+
+  .deliverable-item {
+    background: var(--bg);
+    padding: 20px 22px;
+  }
+
+  .deliverable-item.full {
+    grid-column: 1 / -1;
+    background: var(--bg-off);
+  }
+
+  .deliverable-tag {
+    font-size: 9.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+
+  .deliverable-item h4 {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 8px;
+  }
+
+  .deliverable-item ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .deliverable-item ul li {
+    font-size: 12.5px;
+    color: var(--mid);
+    padding: 3px 0 3px 14px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .deliverable-item ul li::before {
+    content: '–';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-weight: 600;
+  }
+
+  /* ── TIMELINE ───────────────────────────── */
+  .timeline-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--rule);
+    font-size: 13px;
+  }
+
+  .timeline-table th {
+    background: var(--bg-off);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--muted);
+    padding: 10px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+    border-right: 1px solid var(--rule);
+    width: 22%;
+  }
+
+  .timeline-table th:last-child { border-right: none; }
+
+  .timeline-table td {
+    padding: 14px 16px;
+    border-right: 1px solid var(--rule-light);
+    border-bottom: 1px solid var(--rule-light);
+    vertical-align: top;
+    color: var(--mid);
+    line-height: 1.55;
+    font-size: 13px;
+  }
+
+  .timeline-table td:first-child {
+    font-weight: 500;
+    color: var(--dark);
+    white-space: nowrap;
+    font-size: 12.5px;
+  }
+
+  .timeline-table td:last-child { border-right: none; }
+  .timeline-table tr:last-child td { border-bottom: none; }
+
+  /* ── TEAM TABLE ─────────────────────────── */
+  .team-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--rule);
+    font-size: 13px;
+  }
+
+  .team-table th {
+    background: var(--bg-off);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--muted);
+    padding: 10px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+    border-right: 1px solid var(--rule);
+  }
+
+  .team-table th:last-child { border-right: none; }
+
+  .team-table td {
+    padding: 14px 16px;
+    border-right: 1px solid var(--rule-light);
+    border-bottom: 1px solid var(--rule-light);
+    vertical-align: top;
+    color: var(--mid);
+    line-height: 1.55;
+  }
+
+  .team-table td:last-child { border-right: none; }
+  .team-table tr:last-child td { border-bottom: none; }
+
+  .team-table td strong {
+    display: block;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 2px;
+  }
+
+  .role-pill {
+    display: inline-block;
+    font-size: 9.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+    background: var(--tag-bg);
+    color: var(--mid);
+    padding: 2px 7px;
+    border-radius: 2px;
+    margin-bottom: 6px;
+  }
+
+  /* ── COMMERCIAL ─────────────────────────── */
+  .commercial-block {
+    margin-bottom: 24px;
+  }
+
+  .commercial-block h3 {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 12px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule-light);
+  }
+
+  .rate-breakdown {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--rule);
+    font-size: 13px;
+    margin-bottom: 16px;
+  }
+
+  .rate-breakdown th {
+    background: var(--bg-off);
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--muted);
+    padding: 9px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--rule);
+    border-right: 1px solid var(--rule);
+  }
+
+  .rate-breakdown th:last-child { border-right: none; }
+
+  .rate-breakdown td {
+    padding: 12px 14px;
+    border-right: 1px solid var(--rule-light);
+    border-bottom: 1px solid var(--rule-light);
+    color: var(--mid);
+  }
+
+  .rate-breakdown td:last-child { border-right: none; }
+  .rate-breakdown tr:last-child td { border-bottom: none; }
+
+  .rate-breakdown td.total-row {
+    font-weight: 600;
+    color: var(--dark);
+    background: var(--bg-off);
+  }
+
+  .rate-breakdown td.number {
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+
+  .info-row {
+    background: var(--accent-light);
+    border: 1px solid #b8d9c3;
+    border-radius: 2px;
+    padding: 14px 18px;
+    font-size: 12.5px;
+    color: #1a5c30;
+    line-height: 1.65;
+    margin-top: 16px;
+  }
+
+  .assumptions-list {
+    list-style: none;
+    padding: 0;
+    border: 1px solid var(--rule);
+  }
+
+  .assumptions-list li {
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--rule-light);
+    font-size: 13px;
+    color: var(--mid);
+    display: flex;
+    gap: 12px;
+    line-height: 1.55;
+  }
+
+  .assumptions-list li:last-child { border-bottom: none; }
+
+  .assumptions-list li .al {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    white-space: nowrap;
+    padding-top: 2px;
+    min-width: 100px;
+  }
+
+  .oos-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 0;
+  }
+
+  .oos-tag {
+    font-size: 11.5px;
+    background: var(--tag-bg);
+    color: var(--mid);
+    padding: 4px 10px;
+    border-radius: 2px;
+    border: 1px solid var(--rule);
+  }
+
+  /* ── PHASE 2 BOX ────────────────────────── */
+  .phase2-box {
+    background: var(--bg-off);
+    border: 1px solid var(--rule);
+    padding: 24px 28px;
+    margin-top: 0;
+  }
+
+  .phase2-box h3 {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark);
+    margin-bottom: 10px;
+  }
+
+  .phase2-box p {
+    font-size: 13px;
+    color: var(--mid);
+    line-height: 1.65;
+    margin-bottom: 14px;
+  }
+
+  /* ── FOOTER ─────────────────────────────── */
+  .doc-footer {
+    padding: 24px 56px;
+    border-top: 2px solid var(--black);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .doc-footer .brand {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .doc-footer .contact-block {
+    text-align: right;
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.8;
+  }
+
+  .doc-footer .contact-block strong {
+    color: var(--dark);
+    font-weight: 600;
+    display: block;
+  }
+
+
+  @media (max-width: 660px) {
+    .doc-header {
+      padding: 20px;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .doc-meta { text-align: left; }
+
+    .hero {
+      padding: 32px 20px 28px;
+    }
+
+    .hero h1 { font-size: 24px; }
+
+    .hero-summary { font-size: 13.5px; }
+
+    .section { padding: 28px 20px; }
+
+    .section-header { flex-wrap: wrap; gap: 6px; }
+
+    /* Tables: horizontal scroll */
+    .role-table,
+    .timeline-table,
+    .team-table,
+    .rate-breakdown {
+      display: block;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      font-size: 12px;
+    }
+
+    /* Deliverable grid: single column */
+    .deliverable-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .deliverable-item.full { grid-column: 1; }
+
+    /* Assumptions: stack label */
+    .assumptions-list li {
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .assumptions-list li .al {
+      min-width: unset;
+    }
+
+    /* OOS tags: wrap fine already */
+
+    .doc-footer {
+      padding: 20px;
+      flex-direction: column;
+      gap: 16px;
+      align-items: flex-start;
+    }
+
+    .doc-footer .contact-block { text-align: left; }
+  }
+
+  @media print {
+    body { background: white; }
+  }
+</style>
 </head>
-<body style="font-family:sans-serif;display:flex;align-items:center;justify-content:center;height:100vh;margin:0;background:#f5f3ef;color:#0f1a1f;">
-  <p style="font-size:16px;opacity:0.5;">Variant 2 — coming soon</p>
+<body>
+<!-- PASSWORD GATE -->
+<div id="gate" style="display:flex;align-items:center;justify-content:center;min-height:100vh;background:#f7f7f5;padding:24px;font-family:'IBM Plex Sans',sans-serif;">
+  <div style="width:100%;max-width:380px;">
+    <div style="text-align:center;margin-bottom:32px;">
+      <div style="font-family:'IBM Plex Serif',serif;font-size:20px;font-weight:300;color:#111;margin-bottom:6px;">active value</div>
+      <div style="font-size:12.5px;color:#888;font-weight:300;">OQEMA GOWEB Proposal &nbsp;|&nbsp; Restricted access</div>
+    </div>
+    <div style="background:#fff;border:1px solid #d8d8d8;padding:36px 32px;">
+      <div style="font-size:10.5px;letter-spacing:0.16em;text-transform:uppercase;font-weight:600;color:#1a6b3a;margin-bottom:18px;">Enter password to continue</div>
+      <input id="pw-input" type="password" placeholder="Password"
+        style="width:100%;padding:11px 14px;font-family:'IBM Plex Sans',sans-serif;font-size:14px;border:1px solid #d8d8d8;background:#f7f7f5;color:#111;outline:none;box-sizing:border-box;margin-bottom:10px;"
+        onkeydown="if(event.key==='Enter')checkPw()">
+      <div id="pw-error" style="font-size:12px;color:#c0392b;margin-bottom:10px;display:none;">Incorrect password. Please try again.</div>
+      <button onclick="checkPw()"
+        style="width:100%;padding:12px;background:#1a6b3a;color:#fff;border:none;font-family:'IBM Plex Sans',sans-serif;font-size:13.5px;font-weight:600;letter-spacing:0.04em;cursor:pointer;">
+        View Proposal
+      </button>
+    </div>
+  </div>
+</div>
+
+<div id="content" style="display:none;">
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="doc-header">
+    <img src="data:image/jpeg;base64,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" alt="active value">
+    <div class="doc-meta">
+      <strong>Submitted to OQEMA Group / GOWEB Programme</strong><br>
+      April 2026 &nbsp;|&nbsp; Version 1.0 &nbsp;|&nbsp; Confidential
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-label">Proposal — Country Rollout Coordination &amp; Platform Support</div>
+    <h1>Operational continuity from week of 14 April.<br>All countries live by 15 June.</h1>
+    <p class="hero-summary">active value will step in as the central coordination, stakeholder management and editorial operations partner immediately following the current transition. Kaliop remains the technical implementation partner. OQEMA and local markets retain final content and business approvals. active value owns everything in between.</p>
+  </div>
+
+  <!-- 1. ROLE SPLIT -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <span class="section-title">Role Split</span>
+    </div>
+    <table class="role-table">
+      <thead>
+        <tr>
+          <th style="width:25%">Party</th>
+          <th style="width:37%">Responsible for</th>
+          <th style="width:38%">Not responsible for</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="av"><strong>active value</strong>Coordination &amp; Operations</td>
+          <td class="av">Stakeholder management with local editors, content validation against master template, Ibexa DXP upload (EN version), localisation coordination, rollout tracking, launch readiness support, weekly status reporting</td>
+          <td class="av">Technical development, CMS architecture, bug fixing, legal review, translation creation</td>
+        </tr>
+        <tr>
+          <td><strong>Kaliop</strong>Technical Partner</td>
+          <td>Technical implementation, CMS configuration, automated translation, feature development, technical troubleshooting</td>
+          <td>Content operations, stakeholder communication, rollout coordination</td>
+        </tr>
+        <tr>
+          <td><strong>OQEMA / Local Markets</strong>Content &amp; Governance</td>
+          <td>Final content approvals, legal and compliance pages, market-specific business decisions, final sign-off before launch</td>
+          <td>Operational coordination, content preparation, Ibexa upload</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 2. PRIORITY 1 DELIVERABLES -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <span class="section-title">Priority 1 Deliverables — by 15 June 2026</span>
+    </div>
+    <div class="deliverable-grid">
+      <div class="deliverable-item">
+        <div class="deliverable-tag">Stakeholder Management</div>
+        <h4>Local editor coordination</h4>
+        <ul>
+          <li>Direct communication with editors across all markets</li>
+          <li>Content deadline tracking and follow-up</li>
+          <li>Q&A support for local teams on Ibexa and process</li>
+          <li>Escalation management to OQEMA Group Marketing</li>
+        </ul>
+      </div>
+      <div class="deliverable-item">
+        <div class="deliverable-tag">Editorial Operations</div>
+        <h4>Content preparation &amp; upload</h4>
+        <ul>
+          <li>Validation of locally collected content vs. master template</li>
+          <li>Definition of localisation requirements per market</li>
+          <li>Upload of approved content to Ibexa DXP (EN version)</li>
+          <li>Quality check before automated translation</li>
+        </ul>
+      </div>
+      <div class="deliverable-item">
+        <div class="deliverable-tag">Rollout Coordination</div>
+        <h4>Country-by-country execution</h4>
+        <ul>
+          <li>Country status tracking against master timeline</li>
+          <li>Coordination of "under construction" fallback for late markets</li>
+          <li>Coordination with Kaliop on technical dependencies</li>
+          <li>Support for final checks and local website launch</li>
+        </ul>
+      </div>
+      <div class="deliverable-item">
+        <div class="deliverable-tag">Compliance Alignment</div>
+        <h4>Consent &amp; tracking setup</h4>
+        <ul>
+          <li>Support for alignment of Usercentrics consent setup per market</li>
+          <li>Coordination of eTracker configuration with Kaliop</li>
+          <li>Local variation review and flagging</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. 10-DAY PLAN -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <span class="section-title">10-Day Takeover Plan</span>
+    </div>
+    <table class="timeline-table">
+      <thead>
+        <tr>
+          <th>Period</th>
+          <th>Activities</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Week 1<br>14–18 April</td>
+          <td>Handover sessions with Svi Lahodych and Noori Noorullah &nbsp;·&nbsp; Access setup for Ibexa DXP, Teams rollout folder, Microsoft List and Excel templates &nbsp;·&nbsp; Country status review and rollout prioritisation &nbsp;·&nbsp; Alignment with OQEMA and Kaliop on roles, workflows and escalation paths</td>
+        </tr>
+        <tr>
+          <td>Week 2<br>22–25 April</td>
+          <td>Takeover of all communication with local editors &nbsp;·&nbsp; Content readiness tracking per country &nbsp;·&nbsp; Ibexa DXP content preparation and upload for priority markets (CH, UK, ES, FR, SE) &nbsp;·&nbsp; Launch readiness review for markets closest to go-live &nbsp;·&nbsp; Independent operation by content deadline of 24 April</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 4. TEAM -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <span class="section-title">Team</span>
+    </div>
+    <table class="team-table">
+      <thead>
+        <tr>
+          <th style="width:22%">Name</th>
+          <th style="width:28%">Role</th>
+          <th>Contribution</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Stefanie</strong></td>
+          <td><span class="role-pill">Engagement Director</span></td>
+          <td>Senior onboarding, governance and escalation management. Executive alignment with OQEMA Group Marketing. Available on demand throughout both phases.</td>
+        </tr>
+        <tr>
+          <td><strong>Beyna</strong></td>
+          <td><span class="role-pill">Rollout &amp; Stakeholder Manager</span></td>
+          <td>Day-to-day coordination with local editors and markets, deadline follow-up, issue resolution and all rollout communication from 14 April onwards.</td>
+        </tr>
+        <tr>
+          <td><strong>Denise</strong></td>
+          <td><span class="role-pill">Content Operations Manager</span></td>
+          <td>Content validation against the master template, Ibexa DXP upload, localisation requirement coordination, and quality checks before each country launch.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- 5. COMMERCIALS -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <span class="section-title">Commercial Proposal</span>
+    </div>
+
+    <div class="commercial-block">
+      <h3>Phase 1 — Transition &amp; Rollout Support &nbsp;|&nbsp; Until 15 June 2026</h3>
+      <table class="rate-breakdown">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Days</th>
+            <th>Rate (EUR / day)</th>
+            <th class="number">Amount (EUR)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Rollout coordination, stakeholder management, editorial operations<br><span style="font-size:11.5px;color:var(--muted)">Beyna &amp; Denise — blended delivery rate</span></td>
+            <td>40 – 50</td>
+            <td>950</td>
+            <td class="number">38,000 – 47,500</td>
+          </tr>
+          <tr>
+            <td>Senior governance, onboarding &amp; escalation<br><span style="font-size:11.5px;color:var(--muted)">Stefanie — on demand, billed on actual use only</span></td>
+            <td>As needed</td>
+            <td>1,140</td>
+            <td class="number">Actual days only</td>
+          </tr>
+          <tr>
+            <td class="total-row" colspan="3">Indicative Phase 1 budget (excl. Engagement Director)</td>
+            <td class="total-row number">EUR 38,000 – 47,500</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;color:var(--muted);margin-top:6px;">Budget varies with number of active countries, content completeness and coordination effort. All fees net, excl. VAT. Travel costs billed at cost if required.</p>
+    </div>
+
+    <div class="commercial-block">
+      <h3>Phase 2 — Ongoing Management &amp; Platform Development &nbsp;|&nbsp; From completion of Priority 1</h3>
+      <table class="rate-breakdown">
+        <thead>
+          <tr>
+            <th>Item</th>
+            <th>Days / month</th>
+            <th>Rate (EUR / day)</th>
+            <th class="number">Monthly (EUR)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Content operations, stakeholder coordination, backlog, UX/UI support, analytics &amp; feature coordination with Kaliop</td>
+            <td>8 – 12</td>
+            <td>950</td>
+            <td class="number">7,600 – 11,400</td>
+          </tr>
+          <tr>
+            <td>Senior oversight (on demand)</td>
+            <td>As needed</td>
+            <td>1,140</td>
+            <td class="number">Actual days only</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="font-size:12px;color:var(--muted);margin-top:6px;">Recommended initial engagement: 3 months, then rolling monthly. Scope defined collaboratively based on post-launch priorities.</p>
+    </div>
+
+    <div class="commercial-block">
+      <h3>Assumptions &amp; Dependencies</h3>
+      <ul class="assumptions-list">
+        <li><span class="al">Access</span>Ibexa DXP, Teams rollout folder, Microsoft List and Excel templates available and accessible at project start.</li>
+        <li><span class="al">Handover</span>Structured knowledge transfer sessions with current coordinator and key OQEMA stakeholders are available in week of 14 April.</li>
+        <li><span class="al">Technical</span>Kaliop remains fully responsible for technical implementation, CMS development and technical issue resolution.</li>
+        <li><span class="al">Approvals</span>OQEMA and local markets provide timely final content approvals, legal content and business sign-offs.</li>
+        <li><span class="al">Scope</span>BG, IT and CZ are not included in the base capacity estimate. Additional capacity will be agreed separately if these markets are activated.</li>
+      </ul>
+    </div>
+
+    <div class="commercial-block">
+      <h3>Out of Scope</h3>
+      <div class="oos-list">
+        <span class="oos-tag">Technical development</span>
+        <span class="oos-tag">Bug fixing</span>
+        <span class="oos-tag">CMS architecture changes</span>
+        <span class="oos-tag">Net-new feature implementation</span>
+        <span class="oos-tag">Major structural redesign</span>
+        <span class="oos-tag">Legal review</span>
+        <span class="oos-tag">Translation creation outside existing rollout process</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 6. PHASE 2 DETAIL -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">06</span>
+      <span class="section-title">Phase 2 — Ongoing Platform Development (optional)</span>
+    </div>
+    <div class="phase2-box">
+      <h3>Following completion of Priority 1, active value can continue with a lean core team.</h3>
+      <p>Ongoing support may include: content operations and platform maintenance, backlog coordination, UX/UI improvements, analytics and tracking coordination (eTracker), support in shaping future feature requirements together with OQEMA and Kaliop, and structured follow-up with local markets.</p>
+      <p style="margin-bottom:0;">Scope is defined collaboratively each month based on OQEMA's priorities. The same core team remains assigned throughout. Additional specialist capacity (UX/UI, analytics) can be added on demand where required.</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="doc-footer">
+    <div class="brand">
+      active value GmbH<br>
+      Benzenbergstraße 39–47, 40219 Düsseldorf
+    </div>
+    <div class="contact-block">
+      <strong>Anton Klees</strong>
+      Geschäftsführer<br>
+      T +49 (0) 211 749 505 11 &nbsp;|&nbsp; M +49 (0) 173 342 0483<br>
+      anton.klees@active-value.de
+    </div>
+  </div>
+
+</div>
+
+</div> <!-- end #content -->
+
+<script>
+  var HASH = '3fde635cdf31ea416cb44feecd56886f2f1d956038216598052295329130d012';
+
+  async function checkPw() {
+    var val = document.getElementById('pw-input').value;
+    var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(val));
+    var hash = Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+    if (hash === HASH) {
+      sessionStorage.setItem('av_auth', '1');
+      document.getElementById('gate').style.display = 'none';
+      document.getElementById('content').style.display = 'block';
+    } else {
+      document.getElementById('pw-error').style.display = 'block';
+      document.getElementById('pw-input').value = '';
+      document.getElementById('pw-input').focus();
+    }
+  }
+
+  if (sessionStorage.getItem('av_auth') === '1') {
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('content').style.display = 'block';
+  }
+</script>
 </body>
 </html>
